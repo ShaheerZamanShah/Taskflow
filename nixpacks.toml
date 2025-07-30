@@ -1,8 +1,14 @@
+[phases.setup]
+nixPkgs = ["nodejs_22", "npm"]
+
 [phases.install]
 cmds = ["cd backend && npm ci"]
 
 [phases.build]
-cmds = ["echo 'No build step needed for backend'"]
+cmds = ["echo 'Skipping build phase for backend API'"]
 
 [phases.start]
 cmd = "cd backend && npm start"
+
+[variables]
+NODE_ENV = "production"
