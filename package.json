@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "A comprehensive task management application built with the MERN stack",
   "scripts": {
+    "start": "cd backend && npm start",
     "dev": "concurrently \"npm run backend:dev\" \"npm run frontend:dev\"",
     "backend:dev": "cd backend && npm run dev",
     "frontend:dev": "cd frontend && npm start",
