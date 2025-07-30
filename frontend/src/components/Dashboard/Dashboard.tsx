@@ -222,9 +222,9 @@ const Dashboard: React.FC<DashboardProps> = ({ user, onLogout }) => {
       axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 
       const [tasksRes, statsRes, categoryRes] = await Promise.all([
-        axios.get('http://localhost:5000/api/tasks'),
-        axios.get('http://localhost:5000/api/tasks/stats'),
-        axios.get('http://localhost:5000/api/tasks/category-stats')
+        axios.get('/tasks'),
+        axios.get('/tasks/stats'),
+        axios.get('/tasks/category-stats')
       ]);
       
       console.log('Dashboard data:', { tasks: tasksRes.data, stats: statsRes.data, categories: categoryRes.data });
@@ -278,7 +278,7 @@ const Dashboard: React.FC<DashboardProps> = ({ user, onLogout }) => {
         recurringPattern: newTask.isRecurring ? newTask.recurringPattern : undefined
       };
 
-      const response = await axios.post('http://localhost:5000/api/tasks', taskData);
+      const response = await axios.post('/tasks', taskData);
       
       if (response.data.success) {
         const newTaskData = response.data.data.task || response.data.data;
@@ -309,7 +309,7 @@ const Dashboard: React.FC<DashboardProps> = ({ user, onLogout }) => {
 
   const updateTaskStatus = async (taskId: string, status: string) => {
     try {
-      const response = await axios.patch(`http://localhost:5000/api/tasks/${taskId}/status`, { status });
+      const response = await axios.patch(`/tasks/${taskId}/status`, { status });
       
       if (response.data.success) {
         setTasks(tasks.map(task => 
@@ -329,7 +329,7 @@ const Dashboard: React.FC<DashboardProps> = ({ user, onLogout }) => {
     }
 
     try {
-      const response = await axios.delete(`http://localhost:5000/api/tasks/${taskId}`);
+      const response = await axios.delete(`/tasks/${taskId}`);
       
       if (response.data.success) {
         setTasks(tasks.filter(task => task._id !== taskId));

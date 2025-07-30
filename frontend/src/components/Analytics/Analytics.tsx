@@ -161,8 +161,8 @@ const Analytics: React.FC<AnalyticsProps> = ({ user, onLogout }) => {
       axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
       
       const [statsResponse, categoryResponse] = await Promise.all([
-        axios.get('http://localhost:5000/api/tasks/stats'),
-        axios.get('http://localhost:5000/api/tasks/category-stats')
+        axios.get('/tasks/stats'),
+        axios.get('/tasks/category-stats')
       ]);
 
       console.log('Analytics data:', { stats: statsResponse.data, category: categoryResponse.data });
@@ -171,7 +171,7 @@ const Analytics: React.FC<AnalyticsProps> = ({ user, onLogout }) => {
       setCategoryStats(categoryResponse.data.data || categoryResponse.data);
       
       // Calculate priority stats from tasks if not provided
-      const tasksResponse = await axios.get('http://localhost:5000/api/tasks');
+      const tasksResponse = await axios.get('/tasks');
       const tasks = tasksResponse.data.data?.tasks || tasksResponse.data.tasks || [];
       
       const priorityCount = tasks.reduce((acc: any, task: any) => {

@@ -112,7 +112,7 @@ const TaskManager: React.FC<TaskManagerProps> = ({ user, onLogout }) => {
       params.append('sortBy', sortBy.startsWith('-') ? sortBy.substring(1) : sortBy);
       params.append('sortOrder', sortBy.startsWith('-') ? 'desc' : 'asc');
       
-      const response = await axios.get(`http://localhost:5000/api/tasks?${params.toString()}`);
+      const response = await axios.get(`/tasks?${params.toString()}`);
       console.log('Fetched tasks:', response.data);
       setTasks(response.data.data?.tasks || response.data.tasks || response.data || []);
     } catch (error) {
@@ -153,7 +153,7 @@ const TaskManager: React.FC<TaskManagerProps> = ({ user, onLogout }) => {
       const token = localStorage.getItem('token');
       if (!token) return;
       
-      await axios.delete(`http://localhost:5000/api/tasks/${taskId}`, {
+      await axios.delete(`/tasks/${taskId}`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       fetchTasks();
@@ -167,7 +167,7 @@ const TaskManager: React.FC<TaskManagerProps> = ({ user, onLogout }) => {
       const token = localStorage.getItem('token');
       if (!token) return;
       
-      await axios.patch(`http://localhost:5000/api/tasks/${taskId}/status`, 
+      await axios.patch(`/tasks/${taskId}/status`, 
         { status: newStatus },
         { headers: { Authorization: `Bearer ${token}` } }
       );
