@@ -316,6 +316,58 @@
   }
 }
 
+/* Password Requirements Styling */
+.password-requirements {
+  margin-top: 8px;
+  padding: 12px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.requirements-title {
+  font-size: 0.85rem;
+  color: #ffffff;
+  margin: 0 0 8px 0;
+  font-weight: 500;
+}
+
+.requirements-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.requirements-list li {
+  display: flex;
+  align-items: center;
+  font-size: 0.8rem;
+  margin: 4px 0;
+  transition: all 0.3s ease;
+}
+
+.requirements-list li i {
+  margin-right: 8px;
+  width: 12px;
+  font-size: 0.75rem;
+}
+
+.requirement-met {
+  color: #4ade80;
+}
+
+.requirement-met i {
+  color: #4ade80;
+}
+
+.requirement-unmet {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.requirement-unmet i {
+  color: #ef4444;
+}
+
 /* Responsive */
 @media (max-width: 480px) {
   .auth-card {

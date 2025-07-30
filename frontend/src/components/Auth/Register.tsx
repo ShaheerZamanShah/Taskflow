@@ -16,6 +16,12 @@ const Register: React.FC<RegisterProps> = ({ onRegister, onSwitchToLogin, loadin
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [validationError, setValidationError] = useState('');
+  const [passwordRequirements, setPasswordRequirements] = useState({
+    minLength: false,
+    hasUppercase: false,
+    hasLowercase: false,
+    hasNumber: false
+  });
 
   // Particles animation
   const particlesRef = useRef<HTMLCanvasElement>(null);
@@ -100,6 +106,28 @@ const Register: React.FC<RegisterProps> = ({ onRegister, onSwitchToLogin, loadin
     button.appendChild(circle);
   };
 
+  // Password validation function
+  const validatePassword = (password: string) => {
+    const requirements = {
+      minLength: password.length >= 6,
+      hasUppercase: /[A-Z]/.test(password),
+      hasLowercase: /[a-z]/.test(password),
+      hasNumber: /\d/.test(password)
+    };
+    setPasswordRequirements(requirements);
+    return requirements;
+  };
+
+  const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newPassword = e.target.value;
+    setPassword(newPassword);
+    validatePassword(newPassword);
+  };
+
+  const isPasswordValid = () => {
+    return Object.values(passwordRequirements).every(req => req);
+  };
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     
@@ -108,8 +136,8 @@ const Register: React.FC<RegisterProps> = ({ onRegister, onSwitchToLogin, loadin
       return;
     }
     
-    if (password.length < 6) {
-      setValidationError('Password must be at least 6 characters long');
+    if (!isPasswordValid()) {
+      setValidationError('Password does not meet the requirements');
       return;
     }
 
@@ -191,10 +219,33 @@ const Register: React.FC<RegisterProps> = ({ onRegister, onSwitchToLogin, loadin
               type="password"
               id="password"
               value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              onChange={handlePasswordChange}
               required
-              placeholder="Create a password (min 6 characters)"
+              placeholder="Create a password"
             />
+            
+            {/* Password Requirements */}
+            <div className="password-requirements">
+              <p className="requirements-title">Password must contain:</p>
+              <ul className="requirements-list">
+                <li className={passwordRequirements.minLength ? 'requirement-met' : 'requirement-unmet'}>
+                  <i className={`fas ${passwordRequirements.minLength ? 'fa-check' : 'fa-times'}`}></i>
+                  At least 6 characters
+                </li>
+                <li className={passwordRequirements.hasUppercase ? 'requirement-met' : 'requirement-unmet'}>
+                  <i className={`fas ${passwordRequirements.hasUppercase ? 'fa-check' : 'fa-times'}`}></i>
+                  One uppercase letter (A-Z)
+                </li>
+                <li className={passwordRequirements.hasLowercase ? 'requirement-met' : 'requirement-unmet'}>
+                  <i className={`fas ${passwordRequirements.hasLowercase ? 'fa-check' : 'fa-times'}`}></i>
+                  One lowercase letter (a-z)
+                </li>
+                <li className={passwordRequirements.hasNumber ? 'requirement-met' : 'requirement-unmet'}>
+                  <i className={`fas ${passwordRequirements.hasNumber ? 'fa-check' : 'fa-times'}`}></i>
+                  One number (0-9)
+                </li>
+              </ul>
+            </div>
           </div>
           
           <div className="form-group">
