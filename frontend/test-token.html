@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test Token Update</title>
+</head>
+<body>
+    <h1>Token Update Test</h1>
+    <button onclick="updateToken()">Update Token</button>
+    <button onclick="checkToken()">Check Current Token</button>
+    <button onclick="testAPI()">Test API Call</button>
+    <div id="output"></div>
+
+    <script>
+    function updateToken() {
+        const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODg5NWVmMzliNWM2NjE2Y2NjMjg3ODMiLCJ1c2VybmFtZSI6Im5ld3VzZXIiLCJlbWFpbCI6Im5ld3VzZXJAZXhhbXBsZS5jb20iLCJpYXQiOjE3NTM4MzMyMDMsImV4cCI6MTc1NDQzODAwM30.wRobW2xS8jhJejBAciwkqdItINqoiEAmkBt72UT1VB8";
+        localStorage.setItem("token", token);
+        document.getElementById("output").innerHTML = "Token updated!";
+    }
+
+    function checkToken() {
+        const token = localStorage.getItem("token");
+        document.getElementById("output").innerHTML = "Current token: " + (token ? token.substring(0, 50) + "..." : "None");
+    }
+
+    async function testAPI() {
+        const token = localStorage.getItem("token");
+        if (!token) {
+            document.getElementById("output").innerHTML = "No token found!";
+            return;
+        }
+
+        try {
+            const response = await fetch("http://localhost:5000/api/tasks", {
+                headers: {
+                    "Authorization": `Bearer ${token}`
+                }
+            });
+            const data = await response.json();
+            document.getElementById("output").innerHTML = "API Test Result: " + JSON.stringify(data, null, 2);
+        } catch (error) {
+            document.getElementById("output").innerHTML = "API Test Error: " + error.message;
+        }
+    }
+
+    async function testPatchAPI() {
+        const token = localStorage.getItem("token");
+        if (!token) {
+            document.getElementById("output").innerHTML = "No token found!";
+            return;
+        }
+
+        try {
+            const response = await fetch("http://localhost:5000/api/tasks/68895f1a9b5c6616ccc2878a/status", {
+                method: "PATCH",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${token}`
+                },
+                body: JSON.stringify({ status: "pending" })
+            });
+            const data = await response.json();
+            document.getElementById("output").innerHTML = "PATCH Test Result: " + JSON.stringify(data, null, 2);
+        } catch (error) {
+            document.getElementById("output").innerHTML = "PATCH Test Error: " + error.message;
+        }
+    }
+    </script>
+
+    <button onclick="testPatchAPI()">Test PATCH API</button>
+</body>
+</html>

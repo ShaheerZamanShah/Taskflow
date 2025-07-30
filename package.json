@@ -1,0 +1,52 @@
+{
+  "name": "taskflow-mern",
+  "version": "1.0.0",
+  "description": "A comprehensive task management application built with the MERN stack",
+  "scripts": {
+    "dev": "concurrently \"npm run backend:dev\" \"npm run frontend:dev\"",
+    "backend:dev": "cd backend && npm run dev",
+    "frontend:dev": "cd frontend && npm start",
+    "backend:start": "cd backend && npm start",
+    "frontend:build": "cd frontend && npm run build",
+    "install:backend": "cd backend && npm install",
+    "install:frontend": "cd frontend && npm install",
+    "install:all": "npm run install:backend && npm run install:frontend",
+    "test:backend": "cd backend && npm test",
+    "test:frontend": "cd frontend && npm test",
+    "test": "npm run test:backend && npm run test:frontend",
+    "build": "npm run frontend:build",
+    "clean": "rimraf backend/node_modules frontend/node_modules node_modules",
+    "lint:backend": "cd backend && npm run lint",
+    "lint:frontend": "cd frontend && npm run lint",
+    "lint": "npm run lint:backend && npm run lint:frontend"
+  },
+  "keywords": [
+    "task-management",
+    "mern-stack",
+    "react",
+    "nodejs",
+    "express",
+    "mongodb",
+    "productivity",
+    "todo",
+    "project-management"
+  ],
+  "author": "TaskFlow Team",
+  "license": "MIT",
+  "devDependencies": {
+    "concurrently": "^8.2.2",
+    "rimraf": "^5.0.5"
+  },
+  "engines": {
+    "node": ">=14.0.0",
+    "npm": ">=6.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yourusername/taskflow-mern.git"
+  },
+  "bugs": {
+    "url": "https://github.com/yourusername/taskflow-mern/issues"
+  },
+  "homepage": "https://github.com/yourusername/taskflow-mern#readme"
+}
